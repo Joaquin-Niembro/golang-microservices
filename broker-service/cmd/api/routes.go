@@ -24,7 +24,7 @@ func (app *Config) routes() http.Handler {
 
 	r.Use(middleware.Heartbeat("/ping"))
 
-	r.Get("/", app.Broker)
+	r.Post("/", app.Broker)
 
 	r.Post("/handle", app.HandleSubmission)
 

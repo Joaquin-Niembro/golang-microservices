@@ -47,7 +47,7 @@ func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	jsonData, _ := json.MarshalIndent(a, "", "\t")
 
-	request, err := http.NewRequest(http.MethodPost, "http://authentication-service/authenticate", bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", "http://authentication-service/authenticate", bytes.NewBuffer(jsonData))
 	if err != nil {
 		app.errorJSON(w, err)
 		return
@@ -65,9 +65,7 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	if response.StatusCode == http.StatusUnauthorized {
 		app.errorJSON(w, errors.New("invalid credentials"))
 		return
-	}
-
-	if response.StatusCode != http.StatusAccepted {
+	} else if response.StatusCode != http.StatusAccepted {
 		app.errorJSON(w, errors.New("error calling auth service"))
 		return
 	}
