@@ -132,16 +132,16 @@ func (l *LogEntry) Update() (*mongo.UpdateResult, error) {
 
 	result, err := collection.UpdateOne(
 		ctx,
-		bson.M{"_id": docId}
+		bson.M{"_id": docId},
 		bson.D{
 			{"$set", bson.D{
 				{"name", l.Name},
 				{"data", l.Data},
-				{"updated_at", time.Now()}
+				{"updated_at", time.Now()},
 			}},
-		}
+		},
 	)
-	
+
 	if err != nil {
 		return nil, err
 	}
