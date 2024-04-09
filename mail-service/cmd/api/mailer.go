@@ -10,14 +10,14 @@ import (
 )
 
 type Mail struct {
-	Domain     string
-	Host       string
-	Port       int
-	Username   string
-	Password   string
-	Encryption string
-	FromAdress string
-	FromName   string
+	Domain      string
+	Host        string
+	Port        int
+	Username    string
+	Password    string
+	Encryption  string
+	FromAddress string
+	FromName    string
 }
 
 type Message struct {
@@ -32,7 +32,7 @@ type Message struct {
 
 func (m *Mail) SendSMTPMessage(msg Message) error {
 	if msg.From == "" {
-		msg.From = m.FromAdress
+		msg.From = m.FromAddress
 	}
 
 	if msg.FromName == "" {
