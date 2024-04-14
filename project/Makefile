@@ -31,13 +31,13 @@ build_broker:
 	cd ../broker-service && env GOOS=linux CGO_ENABLED=0 go build -o ${BROKER_BINARY} ./cmd/api
 	@echo "Done!"
 
-## build_listener: builds the broker binary as a linux executable
+## build_listener: builds the listener binary as a linux executable
 build_listener:
 	@echo "Building listener binary..."
 	cd ../listener-service && env GOOS=linux CGO_ENABLED=0 go build -o ${LISTENER_BINARY} ./main.go
 	@echo "Done!"	
 
-## build_mailer: builds the broker binary as a linux executable
+## build_mailer: builds the mail binary as a linux executable
 build_mail:
 	@echo "Building mail binary..."
 	cd ../mail-service && env GOOS=linux CGO_ENABLED=0 go build -o ${MAIL_BINARY} ./cmd/api
