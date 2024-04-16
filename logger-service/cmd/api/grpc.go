@@ -2,8 +2,13 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"log-service/data"
 	"log-service/logs"
+	"net"
+
+	"google.golang.org/grpc"
 )
 
 type LogService struct {
@@ -27,4 +32,21 @@ func (l *LogService) WriteLog(ctx context.Context, req *logs.LogRequest) (*logs.
 
 	res := &logs.LogResponse{Result: "logeed!"}
 	return res, nil
+}
+
+func (app *Config) gRPCListen() {
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", gRpcPort))
+	if err != nil {
+		log.Fatalf("Failed to listen for gRPC: %v", err)
+	}
+
+	s := grpc.NewServer()
+
+	logs.RegisterLogServiceServer(s, &LogService{Models: app.Models})
+
+	log.Printf("gRPC Server started on port %s", gRpcPort)
+
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("Failed to listen for gRPC: %v", err)
+	}
 }
